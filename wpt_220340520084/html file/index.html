@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book</title>
+    <script
+        src="https://code.jquery.com/jquery-3.6.0.js"
+        ></script>
+        <script>
+$(()=>{
+    
+    $("#bookid").blur(()=>{
+       // console.log("blur working");
+
+        let input={bookid:$("bookid").val()};
+
+        let parameterstothefunction=
+                        { data:input, 
+                          type:'get',
+                          dataType: "json",
+                          success:(data)=>{ 
+                          
+                              if(data.status  === true )
+                              {
+                                       $("#message").text("bookid is found"); 
+                                       $("#bookname").val(data.book.bookname);
+                                       $("#price").val(data.book.price);
+                              } 
+                              else
+                              {
+                                    $("#message").text("bookid not found");
+                              }
+                                                          
+                            
+                            },
+                          error:(data)=> { console.log("failed to contact server "+data);}
+                        }  ;
+
+                        $.ajax(parameterstothefunction);
+                        
+    })
+})
+
+        </script>
+</head>
+<body>
+    <span></span> Book id</span>  <input type="text" id="bookid" name="bookid">
+    <span id="message">Messsage here</span><br>
+    <span> Book name</span><input type="text" id="bookname" name="bookname"> <br>
+    <span>Price</span><input type="text" id="price" name="price"> <br>
+    <input type="button" id="b1" value="update book"> <br>
+</body>
+</html>
